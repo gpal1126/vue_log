@@ -92,13 +92,163 @@ const router = new VueRouter({
     mode: 'history' //history 모드를 추가
 });
 ```
-
-### Nested 라우터 
+  
+### Nested Router 
+- 특정 URL 에서 1개의 컴포넌트에 여러 개의 하위 컴포넌트를 갖는 것  
 - 라우터로 화면 이동시 여러개의 컴포넌트를 동시에 렌더링  
 - 컴포넌트의 구조 : Parent - Child -> 자식을 포함한 컴포넌트 렌더링  
   
+### Named Views
+- 특정 URL 에서 여러 개의 컴포넌트를 쪼개진 뷰 단위로 렌더링 하는 것  
+- 라우터로 특정 URL로 이동시, 해당하는 여러개의 컴포너트를 동시에 렌더링  
+- 각 컴포넌트에 해당하는 name 속성과 router-view 지정  
+```
+<div id="root">
+    <router-view name="nestedHeader"></router-view>
+    <router-view></router-view>
+</div>
+
+{
+    path: '/home',
+    //Named Router
+    components: {
+        nestedHeader: AppHeader,
+        default: Body,
+    }
+}
+```
+  
+### Vue Templates
+- 화면의 요소들, 함수, 데이터 속성을 Templates에 포함  
+- DOM의 요소와 vue 인스턴스를 매핑할 수 있는 HTML Templates 사용  
+- Virtual DOM을 사용하여 Template 렌더링  
+- DOM 조작 최소화 -> 성능 부하 최소화  
+- render function 직접 구현 가능  
+  
+### Attributes
+- HTML Attributes를 vue의 변수와 연결할 때 v-bind 사용  
+
+### JS Expressions
+- {{}} 안에 javascript 표현식도 가능  
+```
+<div>{{ number+1 }}</div>   <!-- 지향 -->
+<div>{{ message.split('').reverse('').join('') }}</div>     <!-- 권장 안함 -->
+<div>{{ if( chk ) return  }}</div>  <!-- 오류 -->
+```
+
+### Directives 
+- v- 접두사를 붙인 attributes, javascript 표현식  
+- : 을 붙여 인자를 받음  
+```
+<p v-if="seen">Now you see me</p>
+<!-- : 뒤에 선언한 href 인자를 받아 url 값과 매핑 -->
+<a v-bind:href="url"></a>
+<!-- click 이벤트를 받아 vue로 넘김 -->
+<a v-on:click="doSomething">
+```
+
+### Filters 
+- 텍스트의 형식을 편하게 바꿀 수 있도록 필터링  
+- | 을 이용하여 여러개의 필터를 적용 가능  
+```
+<!-- message에 표시될 문자에 capitalize 필터 적용 -->
+{{ message | capitalize }}
+
+new Vue({
+    filters: {
+        capitalize: function(val) { //첫 글자를 대문자로 변경
+            if( !val ) return ''
+            val = val.toString();
+            return val.charAt(0).toUpperCase() + val.slice(1);
+        }
+    },
+});
+```
+
+### Data Binding
+- DOM 기반 HTML Template에 vue 데이터 바인딩 방법  
+    - Interpolation(값 대입)  
+    - Binding Expression(값 연결)  
+    - Directives(디렉티브 사용)  
+  
+### Interpolation - 값 대입
+- Mustache '{{}}' 사용  
+```
+<span>Message: {{ msg }}</span>
+<span v-once>This will never change: {{ msg }}</span>
+<div id="item-{{ id }}"></div>
+```
+  
+### Binding Expression - 값 연결
+- {{}} 를 이용하여 데이터 바인딩  
+```
+<div>{{ number+1 }}</div>   <!-- 지향 -->
+<div>{{ message.split('').reverse('').join('') }}</div>     <!-- 권장 안함 -->
+<div>{{ if( chk ) return  }}</div>  <!-- 오류 -->
+```
+- vue에 내장된 Filter를 {{}} 안에 사용  
+```
+{{ message | capitalize }}
+{{ message | capitalize | upcapitalize }}   //여러개 필터 가능
+```
+  
+### Directives 
+- v- 접두사를 붙인 attributes, javascript 표현식  
+- : 을 붙여 인자를 받음  
+```
+<!-- login의 결과에 따라 p가 존재 or 미존재 -->
+<p v-if="login">Hello</p>
+<!-- click={{doSomething}} 와 같은 역할 -->
+<a v-on:click="doSomething">
+<a @click="doSomething">
+```
+  
+### class Binding
+- class Binding 방법  
+    - 1) class="{{ className }}"  
+    - 2) v-bind:class  
+- class 속성과 v-bind:class 속성 동시 사용 가능  
+```
+<div class="static" v-bind:class="{ 'class-a': isA, 'class-b': isB }"></div>
+<scirpt>
+    data: {
+        isA : true,
+        isB : false,
+    }
+</script>
+// 결과 값
+<div class="static class-a"></div>
+``` 
+
+- Array 구문도 사용 가능  
+```
+<div v-bind:class="[classA, classB]">
+<script>
+    data: {
+        classA: 'class-a',
+        classB: 'class-b'
+    }
+</script>
+```
+  
+### Vue 싱글파일 컴포넌트  
+- .vue 파일에서 html, js, css 관리  
+  
+### vue-loader 
+- 브라우저가 .vue 파일을 렌더할 수 있는 파일들로 변환  
+
+### Vue Development Workflow
+- vue cli로 webpack 설정이 되어있는 프로젝트 생성  
+```
+npm i -g vue-cli
+vue init webpack-simple
+npm i
+npm run dev
+```
+  
   
 ### 데이터 관리 
+- v-bind : HTML Attributes를 Vue의 변수와 연결할 때 사용  
 - html의 v-if, v-else, v-model, v-on, ref, v-for, v-bind, v-show 속성을 이용  
 - 변하는 값은 Vue 객체에서 data 속성으로 나타낸다.  
 

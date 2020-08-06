@@ -48,7 +48,26 @@ var Login = {
       </ul>
     `,
   };
-  
+
+  // 할일 #2
+  // Main 컴포넌트와 그 하위 컴포넌트를 아래 등록해보세요.
+  let Main = {
+    template: `
+      <div>
+        Main Section
+        <router-view></router-view>
+      </div>
+    `,
+  } 
+
+  let mainContainer = {
+    template: `
+      <div>
+        <p>Main Page!</p>
+      </div>
+    `,
+  }
+
   var routes = [
     {
       path: '/login',
@@ -63,7 +82,18 @@ var Login = {
       children: [
         { path: '', component: ListItems }
       ]
-    }
+    },
+    
+      // 할일 #1
+      // `/main` URL 에서 동작할 라우터를 하나 등록하고,
+      // 해당 라우터에서 동작할 Main 컴포넌트와 하위 컴포넌트를 생성하여 등록합니다.
+    {
+      path: '/main',
+      component: Main,
+      children: [
+        { path: '', component: mainContainer }
+      ]
+    },
   ];
   
   var router = new VueRouter({
