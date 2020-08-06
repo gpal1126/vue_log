@@ -233,11 +233,18 @@ new Vue({
   
 ### Vue 싱글파일 컴포넌트  
 - .vue 파일에서 html, js, css 관리  
-  
+   
 ### vue-loader 
+- .vue 파일을 javascript로 변환해주는 webpack loader  
 - 브라우저가 .vue 파일을 렌더할 수 있는 파일들로 변환  
+- ES6 지원  
+- <style> <template> 각각 웹팩 로더 지원 ex) sass, jade  
+- .vue 컴포넌트의 스코프로 css 스타일링 가능  
+- 웹팩의 모듈 번들링에 대한 지원과 의존성 관리  
+- hot reloading 지원  
+  
 
-### Vue Development Workflow
+### Vue Development Workflow 
 - vue cli로 webpack 설정이 되어있는 프로젝트 생성  
 ```
 npm i -g vue-cli
