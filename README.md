@@ -301,4 +301,27 @@ npm run dev
 #### kebab-case : html 속성은 케밥 케이스로 사용
 - 단어사이에 하이픈(-)을 붙여 표현  
   
+
+
+
+
+# OAuth2.0
+
+### 특징
+- OAuth 를 이용하여 accessToken을 얻음  
+- 네아로 OAuth2.0 오픈 api를 이용하여 네이버아이디로그인 적용 했음  
+
+### 역할  
+1. Resource Owner : 계정을 가지고 있는 사람  
+2. Client : 사용할 사이트 ex) 인프런  
+3.  
+- Resource Server(데이터) : 로그인 서비스를 제공하는 사이트  
+- Authorization Server(인증 관련)  
+ex) google, naver, kakao 등...  
   
+* 네이버 OAuth 인증을 이용한 로그인 요청 URL  
+https://nid.naver.com/oauth2.0/authorize?  
+response_type=code  
+&svctype=0  
+&redirect_uri=http%3A%2F%2Fexample.com%2Fauth%2Fnaver%2Fcallback   
+&client_id=cpd_tzgSEyuZPLldKbBj  
