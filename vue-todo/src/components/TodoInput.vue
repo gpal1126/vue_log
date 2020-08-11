@@ -1,6 +1,6 @@
 <template>
     <div class="inputBox shadow">
-        <input type="text" v-model="newTodoItem"/>
+        <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo"/>
         <span class="addContainer" v-on:click="addTodo">
             <i class="fas fa-plus addBtn"></i>
         </span>
@@ -35,7 +35,7 @@ export default {
 <style>
 input:focus { outline: none; }
 .inputBox { height: 50px; background: white; border-radius: 5px; line-height: 50px; }
-.inputBox input { border-style: none; font-size: 0.9rem; }
-.addContainer { width: 3rem; display: block; border-radius: 0 5px 5px 0; background: linear-gradient(to right, #6478FB, #8763FB); float: right; }
+.inputBox input { width: 85%; height: 50px; padding-left: 16px; border-style: none; font-size: 0.9rem; }
+.addContainer { width: 3rem; display: block; border-radius: 0 5px 5px 0; background: linear-gradient(to right, #6478FB, #8763FB); float: right; cursor: pointer; }
 .addBtn { vertical-align: middle; color: white; }
 </style>
