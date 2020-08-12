@@ -10,6 +10,11 @@ $ vue create vue-todo
 npm install
 ```
 
+## Vuex install
+```
+npm install vuex --save
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

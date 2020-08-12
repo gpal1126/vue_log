@@ -27,7 +27,8 @@ var myComponentInstance = new MyComponent();
 4. mounted : 화면에 보여줌  
 5. beforeUpdate  
 6. updated : 데이터가 변경됨  
-7. beforeDestroy : 메모리 누수를 방지하기 위해 clear 하기  
+7. beforeDestroy : 메모리 누수를 방지하기 위해 clear 하기, 다른 페이지로 이동할 때, 
+mounted의 반대    
 8. destroyed : 컴포넌트 사라짐  
   
 
@@ -65,6 +66,7 @@ new Vue({ components: { 'word-relay': cmp }})
   
 ### Event Bus  
 - 컴포넌트 간의 데이터 통신  
+- 어디서 보냈는지/받았는지 알기 어려움(Vuex로 해결)  
 ex)   
 ```
 이벤트 발생 : $emit
@@ -252,7 +254,82 @@ vue init webpack-simple
 npm i
 npm run dev
 ```
+
+### slot 
+- 컴포넌트를 재사용할 수 있도록 도와줌  
+
+### Transition 
+- Transition Classes  
+    - v-enter / v-leave-to 함께 사용  
+    - v-enter-to / v-leave 함께 사용  
+
+### Flux
+- MVC 패턴의 복잡한 데이터 흐름 문제를 해결  
+- 단방향으로 처리  
+            | -  - Action -  -  |   
+            V                   |  
+Action - Dispatcher -> Model -> View  
+1. action : 화면에서 발생하는 이벤트 or 사용자 입력  
+2. dispatcher : 데이터(모델)를 변경하는 방법, 메서드  
+3. model : 화면에 표시할 데이터  
+4. view : 사용자에게 비취지는 화면  
   
+### Vuex  
+- 복잡한 애플리케이션의 컴포넌트들을 효율적으로 관리  
+- 복잡한 컴포넌트의 데이터를 관리하기 위한 상태 관리 패턴 라이브러리  
+- 프로젝트 구조화, 모듈 구조화  
+- 컴포넌트 간 데이터 전달 명시(Event Bus 문제점 해결)  
+- 여러 컴포넌트에서 같은 데이터를 업데이트 할때 동기화 해결  
+  
+### Vuex 컨셉
+- View : 데이터를 표시하는 화면 template  
+- Action : 사용자의 입력에 따라 데이터를 변경하는 methods  
+- State : 컴포넌트 간에 공유하는 데이터 data()  
+
+### Vuex 구조
+Vue Components(컴포넌트) -> Actions(비동기 로직) -> Mutaions(동기 로직) -> State(상태)  
+  
+### Vuex의 속성
+- state : 여러 컴포넌트에 공유되는 데이터 data  
+- getters : 연산된 state 값을 접근하는 속성 computed  
+- mutations : state 값을 변경하는 이벤트 로직/메서드 methods, commit()으로 동작  
+```
+ex1)
+//store.js
+state: { num: 10 },
+mutations: {
+    printNumbers(state){
+        return state.num
+    },
+    sumNumbers(state, anotherNum) {
+        return state.num + anotherNum;
+    }
+}
+//App.vue
+this.$store.commit('printNumbers');
+this.$store.commit('sumNumbers', 20);
+
+
+ex2)
+//store.js
+state : { storeNum: 10 },
+mutations: {
+    modifyState(state, payload) {
+        console.log(payload.str);
+        return state.storeNum += payload.num;
+    }
+}
+//App.vue
+this.$store.commit('modifyState', {
+    str: 'passed from payload',
+    num: 20,
+});
+```
+- actions : 비동기 처리 로직을 선언하는 메서드 aysnc methods  
+  
+### Helper 
+- Vuex를 더 쉽게 코딩할 수 있도록 도와줌  
+
   
 ### 데이터 관리 
 - v-bind : HTML Attributes를 Vue의 변수와 연결할 때 사용  
