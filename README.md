@@ -405,7 +405,98 @@ methods: {
 - getter -> mapGetters  
 - mutations -> mapMutations  
 - actions -> mapActions  
+  
+### mapState
+- Vuex에 선언한 state 속성을 뷰 컴포넌트에 쉽게 연결해주는 헬퍼
+```
+//App.vue
+import { mapState } from 'vuex';
+computed() {
+    // num() { return this.$store.state.num }
+    ...mapState(['num'])
+}
 
+//store.js
+state: {
+    num: 10
+}
+
+<!-- <p>{{ this.$store.state.num }}</p> -->
+<p>{{ this.num }}</p>
+```
+  
+### mapGetters
+- Vuex에 선언한 getters 속성을 뷰 컴포넌트에 쉽게 연결해주는 헬퍼
+```
+//App.vue
+import { mapGettes } from 'vuex';
+computed() { ...mapGetters(['reverseMessage']) }
+
+//store.js
+getters: {
+    reverseMessage(state) {
+        return state.msg.split('').reverse().join('');
+    }
+}
+
+<!-- <p>{{ this.$store.getters.reverseMessage }}</p> -->
+<p>{{ this.reverseMessage }}</p>
+```
+  
+### mapMutations 
+- Vuex에 선언한 mutations 속성을 뷰 컴포넌트에 쉽게 연결해주는 헬퍼
+```
+//App.vue
+import { mapMutations } from 'vuex';
+methods: {
+    ...mapMutations(['clickBtn']),
+    authLogin(){},
+    displayTable(){},
+}
+
+//store.js
+mutations: {
+    clickBtn(state) {
+        alert(state.msg);
+    }
+}
+
+<button @click="clickBtn">popup</button>
+```
+  
+### mapActions 
+- Vuex에 선언한 actions 속성을 뷰 컴포넌트에 쉽게 연결해주는 헬퍼
+```
+//App.vue
+import { mapActions } from 'vuex';
+methods: {
+    ...mapActions(['delayClickBtn']),
+}
+//store.js
+actions: {
+    delayClickBtn(context) {
+        setTimeout(() => context.commit('clickBtn'), 2000);
+    }
+}
+
+<button @click="delayClickBtn">delay</button>
+```
+  
+### 배열 리터럴
+```
+...mapMutations([
+    'clickBtn',     //'clickBtn': clickBtn
+    'addNumber',    //addNumber
+])
+```
+  
+### 객체 리터럴
+```
+...mapMutations({
+    popupMsg: 'clickBtn'    //컴포넌트 메서드명 : store 뮤테이션명
+})
+```
+  
   
 ### 데이터 관리 
 - v-bind : HTML Attributes를 Vue의 변수와 연결할 때 사용  
