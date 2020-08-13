@@ -326,9 +326,85 @@ this.$store.commit('modifyState', {
 });
 ```
 - actions : 비동기 처리 로직을 선언하는 메서드 aysnc methods  
+```
+ex1) 흐름 
+//store.js
+state: {    
+    num: 10     //호출4
+},
+mutations: {
+    doubleNumber(state) {   //호출3
+        state.num * 2;
+    },
+},
+actions: {
+    delayDoubleNumber(context) {    //호출 2
+        context.commit('doubleNumber');
+    },
+},
+
+//App.vue
+this.$store.dispatch('delayDoubleNumber');  //호출 1
+```
+
+```
+ex2) 비동기 코드 예제 1
+//store.js
+mutations: {
+    addCounter(state) {
+        state.counter++
+    },
+},
+actions: {
+    delayedAddCounter(context) {
+        setTimeout(() => context.commit('addCounter'), 2000);
+    },
+},
+
+//App.vue
+methods: {
+    incrementCounter() {
+        this.$store.dispatch('delayedAddCounter');
+    }
+}
+```
+
+```
+ex3) 비동기 코드 예제 2
+//store.js
+mutations: {
+    setData(state, fetchedData) {
+        state.product = fetchedData;
+    },
+},
+actions: {
+    fetchProductData(context) {
+        return axios.get('https://domain.com/products/1')
+                    .then(response => context.commit('setData', response));
+    },
+},
+
+//App.vue
+methods: {
+    getProduct() {
+        this.$store.dispatch('fetchProductData');
+    }
+}
+```
+
+### state를 직접 변경하지 않고 mutations을 변경하는 이유
+- 여러 컴포넌트에서 state 값을 변경하는 경우 어느 컴포넌트에서 state가 변경됐는지 확인이 어렵기 때문에  
+
+### actions에서 비동기 로직을 처리하는 이유
+- mutations과 마찬가지로 여러 컴포넌트에서 state를 호춫하고 변경했는지 확인이 어렵기 때문에  
+
   
 ### Helper 
-- Vuex를 더 쉽게 코딩할 수 있도록 도와줌  
+- Vuex의 각 속성들을 더 쉽게 코딩할 수 있도록 도와줌  
+- store -> mapState  
+- getter -> mapGetters  
+- mutations -> mapMutations  
+- actions -> mapActions  
 
   
 ### 데이터 관리 

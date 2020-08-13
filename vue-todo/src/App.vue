@@ -9,7 +9,7 @@
         <!-- <todo-list v-bind:propsdata="todoItems" 
             v-on:removeTodoItem="removeOneItem" 
             v-on:toggleTodoItem="toggleOneItem"></todo-list> -->
-        <todo-list v-bind:propsdata="todoItems"></todo-list>
+        <todo-list></todo-list>
         <!-- <todo-footer v-on:clearAll="clearAllItems"></todo-footer> -->
         <todo-footer></todo-footer>
 
@@ -33,7 +33,7 @@ import TodoFooter from './components/TodoFooter.vue';
 export default {
     data() {
         return {
-            todoItems: [],
+            //todoItems: [],
         }
     },
     methods: {  //mutations
