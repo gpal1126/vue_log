@@ -4,9 +4,9 @@
         <!-- <ul> -->
             <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem.item" class="shadow">
                 <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" 
-                    v-on:click="toggleComplete(todoItem, index)"></i>
+                    v-on:click="toggleComplete({todoItem, index})"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
-                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+                <span class="removeBtn" v-on:click="removeTodo({todoItem, index})">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
@@ -16,28 +16,32 @@
 </template>
 
 <script scoped>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     //props: ['propsdata'],
     methods: {
-        removeTodo(todoItem, index) {
+        ...mapMutations({
+            removeTodo: 'removeOneItem',
+            toggleComplete: 'toggleOneItem',
+        }),
+        /* removeTodo(todoItem, index) {
             console.log(todoItem, index);
             //this.$emit('이벤트 이름', 인자1, 인자2...);   //이벤트 버스
             //this.$emit('removeTodoItem', todoItem, index);
             const obj = {
-                /* todoItem: todoItem, 
-                index: index, */
+                //todoItem: todoItem, 
+                //index: index, 
                 todoItem,
                 index
             };
             this.$store.commit('removeOneItem', obj);
-        },
-        toggleComplete(todoItem, index) {
+        }, */
+        /* toggleComplete(todoItem, index) {
             console.log(todoItem, index);
             //this.$emit('이벤트 이름', 인자1, 인자2...);
             this.$store.commit('toggleOneItem', {todoItem, index});
-        },
+        }, */
     },
     computed: {
         /* todoItems() {

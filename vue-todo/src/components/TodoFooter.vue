@@ -5,14 +5,19 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
     methods: {
-        clearTodo() {
+        ...mapMutations({
+            clearTodo: 'clearAllItems',
+        }),
+        /* clearTodo() {
             //이벤트 발생
             //this.$emit('clearAll');
             this.$store.commit('clearAllItems');
             //localStorage.clear();
-        },
+        }, */
     }
 }
 </script>

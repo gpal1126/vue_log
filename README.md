@@ -496,6 +496,60 @@ actions: {
     popupMsg: 'clickBtn'    //컴포넌트 메서드명 : store 뮤테이션명
 })
 ```
+
+### store 속성 모듈화
+- 기존 방식  
+```
+//store.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+export const store = new Vuex.Store({
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {},
+});
+
+```
+
+- ES6 import export 이용한 속성 모듈화  
+```
+//store.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+import * as getters from 'store/getters.js';
+import * as mutations from 'store/mutations.js';
+import * as actions from 'store/actions.js';
+
+export const store = new Vuex.Store({
+    state: {},
+    getters,        //getters: getters,
+    mutations,      //mutations: mutations,
+    actions,        //actions: actions,
+});
+```
+  
+### 스토어 모듈화
+```
+//store.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+import todo from 'modules/todo.js';
+
+export const store = new Vuex.Store({
+    modules: {
+        moduleA: todo,  //모듈 명칭 : 모듈 파일명
+        todo,           //todo: todo
+    }
+});
+
+//todo.js
+const state = {}
+const getters = {}
+const mutations = {}
+const actions = {}
+```
   
   
 ### 데이터 관리 
